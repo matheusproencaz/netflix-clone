@@ -12,7 +12,7 @@
 * **Assuntos abordados**:
     - Consumo de REST APIs,
     - CSS e Responsividade com Tailwind,
-    - Criação de componentes com o Next.JS,
+    - Criação de componentes com o Next.JS,g
     - Server side rendering das imagens com o Next.JS,
     - Deploy da aplicação no Vercel.
     - ETC.
