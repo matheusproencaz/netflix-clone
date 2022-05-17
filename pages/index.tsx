@@ -4,6 +4,10 @@ import Banner from '../components/Banner'
 import requests from '../utils/requests'
 import { Movie } from '../typings'
 import Row from '../components/Row'
+import useAuth from '../hooks/useAuth'
+import { useRecoilValue } from 'recoil'
+import { modalState } from '../atoms/modalAtom'
+import Modal from '../components/Modal'
 
 interface Props {
   netflixOriginals: Movie[]
@@ -16,8 +20,6 @@ interface Props {
   documentaries: Movie[]
 }
 
-
-
 const Home = ({ 
   netflixOriginals,
   trendingNow,
@@ -28,10 +30,17 @@ const Home = ({
   romanceMovies,
   documentaries
   }: Props) => {
+    const { logout, loading } = useAuth();
+     const showModal = useRecoilValue(modalState);
+
+    if(loading) return null;
 
   return (
-
     <div className={`relative min-h-screen bg-gradient-to-b to-[#010511] lg:h-[140vh]`}>
+      {/* {loading && 
+        <div className='absolute top-[screen/2] left-[screen/2] text-red-500'> Loading... </div>
+      } */}
+
       <Head> 
         <title>Home - Netflix</title>
         <link rel="icon" href="/favicon.ico" />
@@ -53,14 +62,14 @@ const Home = ({
           <Row title="Romance Movies" movies={romanceMovies} />
           <Row title="Documentaries" movies={documentaries} />
         </section>
-        {/* Modal */}
+        {showModal && 
+        <Modal />}
       </main>
     </div>
   )
 }
 
 export default Home
-
 
 /* Server Side Rendering, erver Side Rendering ou SSR é o processo de pegar todos os Javascript e todos os CSS de um site que, 
 geralmente é carregado no browser (client-side), e renderizá-los como estático do lado do servidor.
