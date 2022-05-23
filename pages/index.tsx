@@ -8,6 +8,12 @@ import useAuth from '../hooks/useAuth'
 import { useRecoilValue } from 'recoil'
 import { modalState } from '../atoms/modalAtom'
 import Modal from '../components/Modal'
+import Plans from '../components/Plans'
+import { getProducts, Product } from "@stripe/firestore-stripe-payments";
+import payments from '../lib/stripe'
+import { useEffect } from 'react'
+import useSubscription from '../hooks/useSubscription'
+import useList from '../hooks/useList'
 
 interface Props {
   netflixOriginals: Movie[]
@@ -18,6 +24,7 @@ interface Props {
   horrorMovies: Movie[]
   romanceMovies: Movie[]
   documentaries: Movie[]
+  products: Product[]
 }
 
 const Home = ({ 
@@ -28,12 +35,22 @@ const Home = ({
   comedyMovies,
   horrorMovies,
   romanceMovies,
-  documentaries
+  documentaries,
+  products
   }: Props) => {
-    const { logout, loading } = useAuth();
-     const showModal = useRecoilValue(modalState);
+    const { logout, loading, user } = useAuth();
+    const showModal = useRecoilValue(modalState);
+    const subscription = useSubscription(user);
+    const movie = useRecoilValue(modalState);
+    const list = useList(user?.uid);
 
-    if(loading) return null;
+    if(loading || subscription === null) return null;
+
+    products = products.sort((a,b) => {
+      return Number(a.prices[0].unit_amount) - Number(b.prices[0].unit_amount);
+    });
+
+    if(!subscription) return <Plans products={products}/>
 
   return (
     <div className={`relative min-h-screen bg-gradient-to-b to-[#010511] lg:h-[140vh]`}>
@@ -54,8 +71,9 @@ const Home = ({
           <Row title="Trending Now" movies={trendingNow} />
           <Row title="Top Rated" movies={topRated} />
           <Row title="Action Thrillers" movies={actionMovies} />
+         
           {/* My Lis Component */}
-          {/* {list.length > 0 && <Row title="My List" movies={list} />} */}
+          {list.length > 0 && <Row title="My List" movies={list} />}
 
           <Row title="Comedies" movies={comedyMovies} />
           <Row title="Scary Movies" movies={horrorMovies} />
@@ -77,6 +95,14 @@ geralmente é carregado no browser (client-side), e renderizá-los como estátic
 Para fazer isso no Next.js, é necessário colocar o nome da função da seguinte forma:
 */
 export const getServerSideProps = async () => {
+  
+  const products = await getProducts(payments, {
+    includePrices: true,
+    activeOnly: true,
+  })
+  .then((res) => res)
+  .catch(err => console.log(err.message));
+  
   const [
     netflixOriginals,
     trendingNow,
@@ -107,7 +133,8 @@ export const getServerSideProps = async () => {
       comedyMovies: comedyMovies.results,
       horrorMovies: horrorMovies.results,
       romanceMovies: romanceMovies.results,
-      documentaries: documentaries.results
+      documentaries: documentaries.results,
+      products
     },
 
   }

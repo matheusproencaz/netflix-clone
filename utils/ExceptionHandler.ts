@@ -1,3 +1,5 @@
+import { useFieldArray } from "react-hook-form"
+
 const ExceptionHandler = (error:string) => {
 
     if(error.includes("too-many-requests")){
@@ -11,6 +13,19 @@ const ExceptionHandler = (error:string) => {
     if(error.includes("wrong-password")) { 
         return ("Wrong Password!") 
     };
+
+    if(error.includes("weak-password")){
+        return ("Password should be at least 6 characters!");
+    }
+
+    if(error.includes("invalid-email")){
+        return ("Invalid E-mail!")
+    }
+
+    if(error.includes("email-already-in-use")){
+        return ("This e-mail is already in use!");
+    }
+
 }
 
 export default ExceptionHandler;
