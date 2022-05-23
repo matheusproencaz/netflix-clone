@@ -45,11 +45,11 @@ function Header() {
         <BasicMenu />
 
         <ul className="hidden space-x-4 md:flex">
-            <li className="headerLink">Home</li>
-            <li className="headerLink">TV Shows</li>
-            <li className="headerLink">Movies</li>
-            <li className="headerLink">New & Popular</li>
-            <li className="headerLink">My List</li>
+            <a href='#home'><li className="headerLink">Home</li></a>
+            <a href='#tvShows'><li className="headerLink">TV Shows</li></a>
+            <a href='#movies'><li className="headerLink">Movies</li></a>
+            <a href='#newPopular'><li className="headerLink">New & Popular</li></a>
+            <a href='#myList'><li className="headerLink">My List</li></a>
         </ul>
         </div>
 
