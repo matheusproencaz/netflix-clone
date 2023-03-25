@@ -55,7 +55,6 @@ function Login() {
         onSubmit={handleSubmit(onSubmit)}>
         <h1 className="text-4xl font-semibold"> Sign In</h1>
 
-       
         <div className="space-y-4">
           {error && 
             <div className="relative px-5 py-2 rounded bg-orange-500 text-white"> {ExceptionHandler(error)}</div>
