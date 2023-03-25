@@ -7,6 +7,7 @@
     - TypeScript <img style="height:25px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Typescript_logo_2020.svg/1200px-Typescript_logo_2020.svg.png" /> 
     - Tailwind <img style="height:25px;" src="https://seeklogo.com/images/T/tailwind-css-logo-5AD4175897-seeklogo.com.png">
     - Firebase <img style="height:25px;" src="https://firebase.google.com/downloads/brand-guidelines/PNG/logo-standard.png?hl=pt-br">
+    - Stripe <img style="height:25px;" src="https://play-lh.googleusercontent.com/2PS6w7uBztfuMys5fgodNkTwTOE6bLVB2cJYbu5GHlARAK36FzO5bUfMDP9cEJk__cE">
     - Vercel <img style="height:25px;" src="https://www.svgrepo.com/show/354513/vercel-icon.svg">
 
 * **Assuntos abordados**:
